@@ -8,9 +8,9 @@ Created on Sat Dec 30 21:06:19 2023
 import os
 from pathlib import Path
 
-#path_base = "/content/ML_predictor"
-#path_base = "/home/jupyter/ML_predictor"
-path_base = "/Users/javi/Desktop/ML/ML_predictor_tree"
+#path_base = "/content/ML_predictor_tree"
+path_base = "/home/jupyter/ML_predictor_tree"
+#path_base = "/Users/javi/Desktop/ML/ML_predictor_tree"
 
 file_df_data           = "sp500_data.csv"
 folder_csv             = "inputs/ahistoricyh"
@@ -50,7 +50,7 @@ tf_serving_path = os.path.join(path_base, folder_tf_serving)
 
 #results_path = Path('/content/ML_predictor/keras')
 #results_path = Path('/home/jupyter/ML_predictor/keras')
-results_path = Path('/Users/javi/Desktop/ML/ML_predictor/keras')
+#results_path = Path('/Users/javi/Desktop/ML/ML_predictor/keras')
 
 
 #file_model_name = f'version01.keras'

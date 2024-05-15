@@ -45,15 +45,12 @@ symbol_ra     = ["^GSPC","^IXIC","BBVA.MC","TEF.MC"]
 loops_backs_results =[]
 loops_tests_results =[]
 
-yf.pdr_override()
 calls_to_yahoo = 0
 
 for symbol in symbol_ra:
-    calls_to_yahoo += 1
     
     print('\n')
     print(symbol)
-    yf.pdr_override()
     start_date = "1980-01-01"
     endin_date = "2024-04-30"
     index_price_data = yf.download(symbol, start=start_date, end=endin_date)
