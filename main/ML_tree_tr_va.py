@@ -4,7 +4,7 @@
 Created on Fri Mar  1 23:33:28 2024
 @author: javi
 """
-#import sys
+import sys
 import os
 
 #GOOGLE COLAB
@@ -12,10 +12,10 @@ import os
 #ruta_directorio_clonado = '/content/ML_predictor'
 #sys.path.append(ruta_directorio_clonado)
 
-#GOOGLE JUPYTER
+#GOOGLE JUPYTERd
 #------------------------------------------------------------------------------
-#nuevo_directorio = "/home/jupyter/ML_predictor"
-#os.chdir(nuevo_directorio)
+nuevo_directorio = "/home/jupyter/ML_predictor"
+os.chdir(nuevo_directorio)
 
 import time
 import warnings
@@ -82,20 +82,21 @@ for symbol in symbol_ra:
     endin_tests   = ['2024-12-31']
     
     for MAES in MAES_ra:
+        
         #CALL PREPROCESSING
         #------------------------------------------------------------------------------
         df_preprocess = mod_preprocess(df_build, prepro_start_date, prepro_endin_date,MAES, e_features)
         
     
-        #n_estimators_ra    = [10,20,30,40,50,60,70,80,100]
-        #min_samples_sp_ra  = [2,3,4,5,6,7,8,9,10]
-        #max_depths_ra      = [1,2,3,4,5,6,7,8,9,10]
-        #min_samples_lf_ra  = [1,2,3,4,5,6,7,8,9,10]
+        n_estimators_ra    = [10,20,30,40,50,60,70,80,100]
+        min_samples_sp_ra  = [2,3,4,5,6,7,8,9,10]
+        max_depths_ra      = [1,2,3,4,5,6,7,8,9,10]
+        min_samples_lf_ra  = [1,2,3,4,5,6,7,8,9,10]
         
-        n_estimators_ra    = [30,2]
-        max_depths_ra      = [9,3]
-        min_samples_sp_ra  = [10,4]
-        min_samples_lf_ra  = [3]
+        #n_estimators_ra    = [30,2]
+        #max_depths_ra      = [9,3]
+        #min_samples_sp_ra  = [10,4]
+        #min_samples_lf_ra  = [3]
         
         
         X_train, y_train = mod_process_data(df_preprocess, start_train, endin_train, start_tests, endin_tests, MAES, 'TRVAL')
