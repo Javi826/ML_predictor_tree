@@ -38,9 +38,6 @@ def mod_pipeline(df_preprocess, start_train, endin_train, start_tests, endin_tes
     if data_type == 'X_train_techi':
            
         X_train_techi = train_data[dlags_columns_selected]
-        #scaler        = StandardScaler()
-        #scaler        = MinMaxScaler()
-        #X_train_techi = scaler.fit_transform(X_train_techi)
         X_train_techi = pd.DataFrame(X_train_techi)
         
         return X_train_techi
@@ -53,12 +50,7 @@ def mod_pipeline(df_preprocess, start_train, endin_train, start_tests, endin_tes
         
         
         X_tests_techi = tests_data[dlags_columns_selected]
-
-        #scaler        = StandardScaler()
-        #scaler       = MinMaxScaler()
-       # X_tests_techi = scaler.fit_transform(X_tests_techi)
         X_tests_techi = pd.DataFrame(X_tests_techi)
-        #X_tests_techi = X_tests_techi.values.reshape(-1, n_features)
         
         return X_tests_techi
 
@@ -69,7 +61,6 @@ def mod_pipeline(df_preprocess, start_train, endin_train, start_tests, endin_tes
     elif data_type == 'y_train':
         
         y_train = train_data['direction']
-        #y_train = y_train.values
                
         return y_train
     
@@ -77,7 +68,6 @@ def mod_pipeline(df_preprocess, start_train, endin_train, start_tests, endin_tes
     elif data_type == 'y_tests':
     
         y_tests = tests_data['direction']
-        #y_tests = y_tests.values
         
         return y_tests
     

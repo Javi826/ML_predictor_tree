@@ -14,8 +14,8 @@ import os
 
 #GOOGLE JUPYTERd
 #------------------------------------------------------------------------------
-nuevo_directorio = "/home/jupyter/ML_predictor"
-os.chdir(nuevo_directorio)
+#nuevo_directorio = "/home/jupyter/ML_predictor_tree"
+#os.chdir(nuevo_directorio)
 
 import time
 import warnings
@@ -29,35 +29,37 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.expand_frame_repr', False)
 
 from main.functions.def_functions import feature_importance
-from main.paths.paths import path_base,folder_csv, folder_tests_results
+from main.paths.paths import path_base,folder_csv
 from main.modules.mod_data_build import mod_data_build
 from main.modules.mod_preprocess import mod_preprocess
 from main.modules.mod_proces_data import mod_process_data
 from main.modules.mod_save_results import save_tests_results
 from main.modules.mod_backtesting import mod_backtesting
-#from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 # YAHOO CALL + SAVE + READING file
 #------------------------------------------------------------------------------
-symbol_ra     = ["^GSPC","^IXIC","BBVA.MC","TEF.MC"]
+#symbol_ra     = ["^GSPC"]
+symbol_ra     = ["BBVA.MC"]
 loops_backs_results =[]
 loops_tests_results =[]
 
-calls_to_yahoo = 0
+iteration_symbol = 0
+iteration_mae = 0
 
 for symbol in symbol_ra:
     
-    print('\n')
-    print(symbol)
+    iteration_symbol += 1  
+    #print('\n')
+    #print(f"symbol {iteration_symbol}")
     start_date = "1980-01-01"
     endin_date = "2024-04-30"
-    index_price_data = yf.download(symbol, start=start_date, end=endin_date)
+    #index_price_data = yf.download(symbol, start=start_date, end=endin_date)
     
     index_file_name = f"{symbol}.csv"
     csv_path = os.path.join(path_base, folder_csv, index_file_name)
-    index_price_data.to_csv(csv_path, index=True)
+    #index_price_data.to_csv(csv_path, index=True)
     
     #CALL BUILD
     #------------------------------------------------------------------------------
@@ -69,8 +71,8 @@ for symbol in symbol_ra:
     prepro_start_date = "2000-01-01"
     prepro_endin_date = "2024-04-30"
     
-    #MAES_ra=[1,2,3,4,5,6,7,8,9,10]
-    MAES_ra=[1,3,4]
+    MAES_ra=[1,3]
+    
     
     e_features='Y'
     start_train   = ['2000-01-01']
@@ -80,20 +82,22 @@ for symbol in symbol_ra:
     
     for MAES in MAES_ra:
         
+        iteration_mae += 1  
+        #print(f"maesra {iteration_mae}")
+          
         #CALL PREPROCESSING
         #------------------------------------------------------------------------------
         df_preprocess = mod_preprocess(df_build, prepro_start_date, prepro_endin_date,MAES, e_features)
+          
+        #n_estimators_ra    = [10,20,30,40,50,60,70,80,100]
+        #min_samples_sp_ra  = [2,3,4,5,6,7,8,9,10]
+        #max_depths_ra      = [1,2,3,4,5,6,7,8,9,10]
+        #min_samples_lf_ra  = [1,2,3,4,5,6,7,8,9,10]
         
-    
-        n_estimators_ra    = [10,20,30,40,50,60,70,80,100]
-        min_samples_sp_ra  = [2,3,4,5,6,7,8,9,10]
-        max_depths_ra      = [1,2,3,4,5,6,7,8,9,10]
-        min_samples_lf_ra  = [1,2,3,4,5,6,7,8,9,10]
-        
-        #n_estimators_ra    = [30,2]
-        #max_depths_ra      = [9,3]
-        #min_samples_sp_ra  = [10,4]
-        #min_samples_lf_ra  = [3]
+        n_estimators_ra    = [30,2]
+        max_depths_ra      = [9]
+        min_samples_sp_ra  = [10]
+        min_samples_lf_ra  = [3]
         
         
         X_train, y_train = mod_process_data(df_preprocess, start_train, endin_train, start_tests, endin_tests, MAES, 'TRVAL')

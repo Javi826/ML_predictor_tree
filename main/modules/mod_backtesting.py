@@ -13,10 +13,14 @@ from main.paths.paths import path_base,folder_tests_results
 from main.functions.def_functions import backs_results
 from main.modules.mod_save_results import save_backs_results
 
+iteration_back=0
 
 def mod_backtesting(symbol, MAES, forrest_comb, df_tests, df_predictions, start_tests,endin_tests,loops_backs_results):
     
-    
+    global iteration_back 
+   
+    iteration_back += 1  
+    #print(f"backs {iteration_back}")
     start_tests_i = start_tests[0]
     endin_tests_i = endin_tests[0]
     
@@ -90,20 +94,8 @@ def mod_backtesting(symbol, MAES, forrest_comb, df_tests, df_predictions, start_
     n_operations    = (df_backtesting.shape[0]-1)/2
     rent_op_mean    = df_backtesting['oper_rent'].mean()*100
     
-    # SHAPE RATIO
-    #returns = df_backtesting['nets_capital']
-    #risk_free_rate        = 0  # Supongamos una tasa libre de riesgo del 0% por simplicidad
-    #volatility_st         = np.std(returns)
-    #sharpe_ratio_st       = (np.mean(returns) - risk_free_rate) / volatility_st
     sharpe_ratio_st       = 0
-    
-    
-    # MAXDRWON
-    #cum_returns = (1 + returns).cumprod()
-    #max_drawdown_st = ((cum_returns.cummax() - cum_returns) / cum_returns.cummax()).max()
     max_drawdown_st = 0
-    
-    
      
     # Imprimir los valores con dos decimales
     #print("\nsymbol back :",symbol)
@@ -120,3 +112,13 @@ def mod_backtesting(symbol, MAES, forrest_comb, df_tests, df_predictions, start_
          
     return 
 
+
+    # MAXDRWON
+    #cum_returns = (1 + returns).cumprod()
+    #max_drawdown_st = ((cum_returns.cummax() - cum_returns) / cum_returns.cummax()).max()
+
+    # SHAPE RATIO
+    #returns = df_backtesting['nets_capital']
+    #risk_free_rate        = 0  # Supongamos una tasa libre de riesgo del 0% por simplicidad
+    #volatility_st         = np.std(returns)
+    #sharpe_ratio_st       = (np.mean(returns) - risk_free_rate) / volatility_st

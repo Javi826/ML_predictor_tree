@@ -59,7 +59,7 @@ def mod_preprocess (df_build, prepro_start_date, prepro_endin_date,MAES, e_featu
     df_preprocess.dropna(inplace=True)
     
     #df_preprocessing['date'] = pd.to_datetime(df_preprocessing['date'])
-    df_plots(df_preprocess['date'],df_preprocess['close'],'date','close','lines')
+    #df_plots(df_preprocess['date'],df_preprocess['close'],'date','close','lines')
     
     # SAVE Dataframe
     file_suffix     = f"_{str(aveg1).zfill(2)}_{prepro_start_date}_{prepro_endin_date}.xlsx"
@@ -67,6 +67,15 @@ def mod_preprocess (df_build, prepro_start_date, prepro_endin_date,MAES, e_featu
     df_preprocess.to_excel(excel_file_path, index=False)
     
     return df_preprocess
+
+
+
+
+
+
+
+
+
 
 
 
