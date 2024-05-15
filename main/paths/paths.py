@@ -10,7 +10,7 @@ from pathlib import Path
 
 #path_base = "/content/ML_predictor"
 #path_base = "/home/jupyter/ML_predictor"
-path_base = "/Users/javi/Desktop/ML/ML_predictor"
+path_base = "/Users/javi/Desktop/ML/ML_predictor_tree"
 
 file_df_data           = "sp500_data.csv"
 folder_csv             = "inputs/ahistoricyh"
