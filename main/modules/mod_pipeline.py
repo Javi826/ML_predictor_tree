@@ -18,14 +18,15 @@ def mod_pipeline(df_preprocess, start_train, endin_train, start_tests, endin_tes
     endin_tests_i = endin_tests[0]
     
     df_date_lag_dir = df_preprocess.copy()
+    
 
-          
+    #print(df_date_lag_dir)   
     #DATA SPLIT
     #------------------------------------------------------------------------------     
     train_data = df_date_lag_dir[(df_date_lag_dir['date'] >= start_train_i) & (df_date_lag_dir['date'] <  endin_train_i)]
     tests_data = df_date_lag_dir[(df_date_lag_dir['date']  > start_tests_i) & (df_date_lag_dir['date'] <= endin_tests_i)]
     
-    dlags_columns_selected = [col for col in df_date_lag_dir.columns if col.startswith('ret') or col.startswith('fet')]
+    dlags_columns_selected = [col for col in df_date_lag_dir.columns if col.startswith('rets') or col.startswith('fet')]
     train_techi_name    = f"train_data_techi_{start_train_i}.xlsx"
     train_excel_path    = os.path.join(path_base, folder_zinputs_model, train_techi_name)
     train_data_selected = train_data[dlags_columns_selected]
@@ -47,15 +48,12 @@ def mod_pipeline(df_preprocess, start_train, endin_train, start_tests, endin_tes
     #X_TESTS
     #------------------------------------------------------------------------------        
     elif data_type == 'X_tests_techi':
-        
-        
+                
         X_tests_techi = tests_data[dlags_columns_selected]
         X_tests_techi = pd.DataFrame(X_tests_techi)
         
         return X_tests_techi
-
-                    
-    
+                       
     #y_train,valid,tests
     #------------------------------------------------------------------------------             
     elif data_type == 'y_train':
@@ -63,8 +61,7 @@ def mod_pipeline(df_preprocess, start_train, endin_train, start_tests, endin_tes
         y_train = train_data['direction']
                
         return y_train
-    
-        
+            
     elif data_type == 'y_tests':
     
         y_tests = tests_data['direction']

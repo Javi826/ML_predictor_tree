@@ -8,7 +8,8 @@ import os
 from main.functions.def_functions import add_index_column,date_anio,day_week,sort_columns,rounding_data,one_hot_months
 from main.paths.paths import path_base,folder_df_build
 
-def mod_data_build(symbol, df_data,start_date,endin_date):
+def mod_data_build(symbol, df_data):
+    
     
     #Restart dataframe jic
     restart_dataframes = True  
@@ -22,7 +23,7 @@ def mod_data_build(symbol, df_data,start_date,endin_date):
     df_build = rounding_data(df_build)
     df_build = sort_columns(df_build)
 
-    file_df_build = f"df_build_{symbol}_{start_date}_{endin_date}.csv"
+    file_df_build = f"df_build_{symbol}.csv"
     excel_file_path = os.path.join(path_base, folder_df_build, file_df_build)
     df_build.to_csv(excel_file_path, index=False)
     
