@@ -103,7 +103,6 @@ def tests_results(symbol, MAES, start_train, start_tests, endin_tests,n_estimato
         'tests_accuracy': tests_accuracy,
     }
 
-
 def backs_results(symbol,MAES,forrest_comb, initial_capital,last_capital,total_return_buy_hold,return_strategy,n_operations,rent_op_mean, sharpe_ratio_st,max_drawdown_st):
     
     return {
@@ -120,7 +119,6 @@ def backs_results(symbol,MAES,forrest_comb, initial_capital,last_capital,total_r
         'max_drawdown_st': round(max_drawdown_st,1)
     }
 
-
 def feature_importance(model, X_train):
 
     importances = pd.DataFrame({'Importance': model.feature_importances_ * 100}, index=X_train.columns)
@@ -133,7 +131,6 @@ def feature_importance(model, X_train):
     plt.ylabel('Features')
     plt.tight_layout()
     plt.show()
-
 
 def df_plots(x, y, x_label, y_label,plot_style):
     

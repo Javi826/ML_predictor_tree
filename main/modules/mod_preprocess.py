@@ -25,8 +25,8 @@ def mod_preprocess (df_build, MAES, e_features):
         df_preprocess['short_MAVG'] = df_preprocess['close'].rolling(window=aveg1).mean()
         df_preprocess['longs_MAVG'] = df_preprocess['close'].rolling(window=aveg2).mean()
     
-        df_preprocess['direction'] = np.where(df_preprocess['short_MAVG'] > df_preprocess['longs_MAVG'], 1, 0)
-        df_preprocess['f_direction'] = df_preprocess['direction'].shift(-1)
+        df_preprocess['signal_mavg'] = np.where(df_preprocess['short_MAVG'] > df_preprocess['longs_MAVG'], 1, 0)
+        df_preprocess['target'] = df_preprocess['signal_mavg'].shift(-1)
     
         #FEATURING   
         #----------------------------------------------------------------------------------------------    
@@ -47,19 +47,30 @@ def mod_preprocess (df_build, MAES, e_features):
         df_preprocess['fet_%D200']   = STD(df_preprocess['close'], df_preprocess['low'], df_preprocess['high'], 200)
         df_preprocess['fet_%K200']   = STK(df_preprocess['close'], df_preprocess['low'], df_preprocess['high'], 200)
         #df_preprocess['fet_d_week']  = df_build['day_week']
+        
+        #RETURNS
+        #----------------------------------------------------------------------------------------------    
        
     if e_features == 'returns':
         
        df_preprocess['returns']    = df_preprocess['close'] - df_preprocess['close'].shift(1)
        df_preprocess['direction']  = np.where(df_preprocess['returns'] > 0, 1, 0)
-       df_preprocess['direction']  = df_preprocess['direction'].shift(-1)
+       df_preprocess['target']     = df_preprocess['direction'].shift(-1)
        
        lags = 20
+             
        cols = []
        for lag in range(1,lags+1):
            col = f'rets_lag_{str(lag).zfill(2)}'
            df_preprocess[col] = df_preprocess['returns'].shift(lag)
-           cols.append(col) 
+           cols.append(col)
+           
+           
+
+       #df_preprocess['fet_%K010']   = STK(df_preprocess['close'], df_preprocess['low'], df_preprocess['high'], 10)
+
+           
+       #df_preprocess['fet_d_week']  = df_build['day_week']
 
          
     #DROPNA

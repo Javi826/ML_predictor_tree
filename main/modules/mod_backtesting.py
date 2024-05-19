@@ -10,19 +10,23 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from main.paths.paths import path_base,folder_tests_results
-from main.functions.def_functions import backs_results
+from main.functions.def_functions import backs_results, filter_data_by_date_range
 from main.modules.mod_save_results import save_backs_results
 
 
-def mod_backtesting(symbol, MAES, forrest_comb, df_tests, df_predictions, start_tests,endin_tests,loops_backs_results):
+def mod_backtesting(symbol, MAES, forrest_comb, df_preprocess, df_predictions, start_tests,endin_tests,loops_backs_results):
     
     start_tests_i = start_tests[0]
     endin_tests_i = endin_tests[0]
+
+    df_tests = filter_data_by_date_range(df_preprocess, start_tests_i, endin_tests_i)
     
     df_recove_data = pd.DataFrame()
         
-    df_recove_data['date']  = df_tests['date']
-    df_recove_data['close'] = df_tests['close']
+    df_recove_data['date']        = df_tests['date']
+    df_recove_data['close']       = df_tests['close']
+    #df_recove_data['signal_mavg'] = df_tests['signal_mavg']
+        
     df_recove_data.reset_index(drop=True, inplace=True)
     df_predictions.reset_index(drop=True, inplace=True)
    
@@ -31,8 +35,11 @@ def mod_backtesting(symbol, MAES, forrest_comb, df_tests, df_predictions, start_
     
     #SIGNAL
     #---------------------------------------------------------------------------------------------------   
-    column_choose = 'direction'
     
+    #df_signals['signal_combi'] = np.where((df_signals['signal_mavg'] == 1) & (df_signals['y_preds'] == 1), 1, 0)
+    #df_signals['signal_combi'] = np.where((df_signals['signal_mavg'] == 1) & (df_signals['y_preds'] == 1), 1, 0)
+    
+    column_choose = 'y_preds'
     df_signals['signal'] = np.select(
         [(df_signals[column_choose] == 1) & (df_signals[column_choose].shift(1) == 0),
          (df_signals[column_choose] == 1) & (df_signals[column_choose].shift(1) == 1),
@@ -41,7 +48,7 @@ def mod_backtesting(symbol, MAES, forrest_comb, df_tests, df_predictions, start_
         [1, 0, 0, -1], default=np.nan)
     
     df_signals.at[0, 'signal'] = 1
-          
+            
     # SAVE FILE
     #---------------------------------------------------------------------------------------------------
     excel_signals_path = os.path.join(path_base, folder_tests_results, f"df_market_signals_{start_tests_i}.xlsx")
@@ -56,7 +63,7 @@ def mod_backtesting(symbol, MAES, forrest_comb, df_tests, df_predictions, start_
     df_backtesting.loc[df_backtesting['signal'] == -1, 'oper_rent'] = df_backtesting['close'].pct_change(fill_method=None)
 
     
-    comision = 0.5
+    comision = 0.1
     
     df_backtesting.loc[df_backtesting['oper_rent'] != 0, 'oper_rent_gross'] = df_backtesting['oper_rent']
     df_backtesting.loc[df_backtesting['oper_rent'] != 0, 'oper_rent_nets']  = df_backtesting['oper_rent'] - (comision/100)

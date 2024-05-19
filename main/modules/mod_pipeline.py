@@ -43,8 +43,7 @@ def mod_pipeline(df_preprocess, start_train, endin_train, start_tests, endin_tes
         
         return X_train_techi
     
-    
-    
+      
     #X_TESTS
     #------------------------------------------------------------------------------        
     elif data_type == 'X_tests_techi':
@@ -58,13 +57,13 @@ def mod_pipeline(df_preprocess, start_train, endin_train, start_tests, endin_tes
     #------------------------------------------------------------------------------             
     elif data_type == 'y_train':
         
-        y_train = train_data['direction']
+        y_train = train_data['target']
                
         return y_train
             
     elif data_type == 'y_tests':
     
-        y_tests = tests_data['direction']
+        y_tests = tests_data['target']
         
         return y_tests
     
