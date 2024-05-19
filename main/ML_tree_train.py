@@ -14,8 +14,8 @@ import os
 
 #GOOGLE JUPYTERd
 #------------------------------------------------------------------------------
-#nuevo_directorio = "/home/jupyter/ML_predictor"
-#os.chdir(nuevo_directorio)
+nuevo_directorio = "/home/jupyter/ML_predictor_tree"
+os.chdir(nuevo_directorio)
 
 import time
 import warnings
