@@ -20,7 +20,7 @@ os.chdir(nuevo_directorio)
 import time
 import warnings
 import pandas as pd
-import yfinance as yf
+#import yfinance as yf
 warnings.filterwarnings("ignore", category=FutureWarning, module='tensorflow')
 
 start_time = time.time()
