@@ -15,7 +15,7 @@ from main.modules.mod_features import MAV, EMA, ROC, MOM, STK, STD
 def mod_preprocess (df_build, MAES, e_features):
     
     aveg1 = MAES
-    aveg2 = aveg1 * 6
+    aveg2 = aveg1 * 5
     df_preprocess = df_build.copy() 
     
     if e_features == 'MAVG':
@@ -25,8 +25,8 @@ def mod_preprocess (df_build, MAES, e_features):
         df_preprocess['short_MAVG'] = df_preprocess['close'].rolling(window=aveg1).mean()
         df_preprocess['longs_MAVG'] = df_preprocess['close'].rolling(window=aveg2).mean()
     
-        df_preprocess['signal_mavg'] = np.where(df_preprocess['short_MAVG'] > df_preprocess['longs_MAVG'], 1, 0)
-        df_preprocess['target'] = df_preprocess['signal_mavg'].shift(-1)
+        df_preprocess['y_mavgs']   = np.where(df_preprocess['short_MAVG'] > df_preprocess['longs_MAVG'], 1, 0)
+        df_preprocess['y_target']  = df_preprocess['y_mavgs'].shift(-1)
     
         #FEATURING   
         #----------------------------------------------------------------------------------------------    
@@ -55,7 +55,7 @@ def mod_preprocess (df_build, MAES, e_features):
         
        df_preprocess['returns']    = df_preprocess['close'] - df_preprocess['close'].shift(1)
        df_preprocess['direction']  = np.where(df_preprocess['returns'] > 0, 1, 0)
-       df_preprocess['target']     = df_preprocess['direction'].shift(-1)
+       df_preprocess['y_target']     = df_preprocess['direction'].shift(-1)
        
        lags = 20
              
@@ -64,12 +64,9 @@ def mod_preprocess (df_build, MAES, e_features):
            col = f'rets_lag_{str(lag).zfill(2)}'
            df_preprocess[col] = df_preprocess['returns'].shift(lag)
            cols.append(col)
-           
-           
+                  
 
-       #df_preprocess['fet_%K010']   = STK(df_preprocess['close'], df_preprocess['low'], df_preprocess['high'], 10)
-
-           
+       #df_preprocess['fet_%K010']   = STK(df_preprocess['close'], df_preprocess['low'], df_preprocess['high'], 10)           
        #df_preprocess['fet_d_week']  = df_build['day_week']
 
          

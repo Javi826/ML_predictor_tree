@@ -57,13 +57,13 @@ def mod_pipeline(df_preprocess, start_train, endin_train, start_tests, endin_tes
     #------------------------------------------------------------------------------             
     elif data_type == 'y_train':
         
-        y_train = train_data['target']
+        y_train = train_data['y_target']
                
         return y_train
             
     elif data_type == 'y_tests':
     
-        y_tests = tests_data['target']
+        y_tests = tests_data['y_target']
         
         return y_tests
     

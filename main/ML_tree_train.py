@@ -34,15 +34,15 @@ from main.modules.mod_data_build import mod_data_build
 from main.modules.mod_preprocess import mod_preprocess
 from main.modules.mod_proces_data import mod_process_data
 from main.modules.mod_save_results import save_tests_results
-from main.modules.mod_backtesting import mod_backtesting,mod_backtesting2
+from main.modules.mod_backtesting import mod_backtesting
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
 # YAHOO CALL + SAVE + READING file
 #------------------------------------------------------------------------------
-#symbol_ra     = ["^GSPC","^IXIC","BBVA.MC","TEF.MC"]
+symbol_ra     = ["^GSPC","^IXIC","BBVA.MC","TEF.MC"]
 symbol_ra     = ["^GSPC"]
-#symbol_ra     = ["BBVA.MC"]
+symbol_ra     = ["BBVA.MC"]
 loops_backs_results =[]
 loops_tests_results =[]
 
@@ -68,7 +68,7 @@ for symbol in symbol_ra:
     MAES_ra=[1]
     
     e_features='MAVG'
-    e_features='returns'
+    #e_features='returns'
     start_train   = ['2000-01-01']
     endin_train   = ['2023-12-31']
     start_tests   = ['2024-01-01']
@@ -86,8 +86,8 @@ for symbol in symbol_ra:
         min_samples_sp_ra  = [2,3,4,5,6,7,8,9,10]
         max_depths_ra      = [1,2,3,4,5,6,7,8,9,10]
  
-        #n_estimators_ra    = [10]
-        #max_depths_ra      = [3]
+        #n_estimators_ra    = [20]
+        #max_depths_ra      = [6]
         #min_samples_sp_ra  = [2]
         #min_samples_lf_ra  = [8]
         
@@ -116,7 +116,7 @@ for symbol in symbol_ra:
                         #feature_importance(model, X_train)
                         
                         y_pred = model.predict(X_tests)
-                        df_predictions = pd.DataFrame({'y_tests': y_tests, 'y_preds': y_pred})
+                        df_predictions = pd.DataFrame({'y_target': y_tests, 'y_preds': y_pred})
                         
                         # Calcular la precisión del modelo
                         tests_accuracy = accuracy_score(y_tests, y_pred)

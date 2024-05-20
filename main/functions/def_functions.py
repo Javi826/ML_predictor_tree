@@ -76,6 +76,12 @@ def filter_data_by_date_range(df, filter_start_date, filter_endin_date):
         
     return df[(df['date'] >= filter_start_date) & (df['date'] <= filter_endin_date)]
 
+def find_first_non_zero(past_signals):
+    for val in reversed(past_signals):
+        if val != 0:
+            return val
+    return 0
+
 def set_seeds(seed=42):
     random.seed(seed)
     np.random.seed(seed)
