@@ -61,14 +61,33 @@ def mod_backtesting(symbol, MAES, forrest_comb, df_preprocess, df_predictions, s
             
             last_non_zero = find_first_non_zero(past_signals)
     
-            if last_non_zero == 1:
-                df_signals.loc[i, 'signal'] = -1
-            elif last_non_zero == -1:
+            if df_signals.loc[i, 'y_preds'] == 1 and last_non_zero == -1:
                 df_signals.loc[i, 'signal'] = 1
+                
+            elif df_signals.loc[i, 'y_preds'] == 1 and last_non_zero == 1:                
+                df_signals.loc[i, 'signal'] = 0     
+                
+            elif df_signals.loc[i, 'y_preds'] == 0 and last_non_zero == 1: 
+                df_signals.loc[i, 'signal'] = -1
+                
+            elif df_signals.loc[i, 'y_preds'] == 0 and last_non_zero == -1:                
+                df_signals.loc[i, 'signal'] = 0
+                
             else:
                 df_signals.loc[i, 'signal'] = 1
                 
     df_signals.loc[len(df_signals) - 1, 'signal'] = -1
+    
+    last_100_values = df_signals.iloc[-101:-1]['signal']
+
+    # Encontrar el primer valor distinto de 0
+    first_non_zero = last_100_values.loc[last_100_values != 0].iloc[0]
+    
+    # Determinar el nuevo valor de la columna 'signal'
+    if first_non_zero == 1:
+        df_signals.loc[len(df_signals) - 1, 'signal'] = -1
+    elif first_non_zero == -1:
+        df_signals.loc[len(df_signals) - 1, 'signal'] = 5
                 
 
       

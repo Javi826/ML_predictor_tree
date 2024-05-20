@@ -14,13 +14,13 @@ import os
 
 #GOOGLE JUPYTERd
 #------------------------------------------------------------------------------
-nuevo_directorio = "/home/jupyter/ML_predictor_tree"
-os.chdir(nuevo_directorio)
+#nuevo_directorio = "/home/jupyter/ML_predictor_tree"
+#os.chdir(nuevo_directorio)
 
 import time
 import warnings
 import pandas as pd
-#import yfinance as yf
+import yfinance as yf
 warnings.filterwarnings("ignore", category=FutureWarning, module='tensorflow')
 
 start_time = time.time()
@@ -42,7 +42,7 @@ from sklearn.metrics import accuracy_score
 #------------------------------------------------------------------------------
 symbol_ra     = ["^GSPC","^IXIC","BBVA.MC","TEF.MC"]
 symbol_ra     = ["^GSPC"]
-symbol_ra     = ["BBVA.MC"]
+#symbol_ra     = ["BBVA.MC"]
 loops_backs_results =[]
 loops_tests_results =[]
 
@@ -81,15 +81,15 @@ for symbol in symbol_ra:
         df_preprocess = mod_preprocess(df_build,MAES, e_features)
         
     
-        n_estimators_ra    = [10,20,30,40,50,60,70,80,100]
-        min_samples_lf_ra  = [1,2,3,4,5,6,7,8,9,10]
-        min_samples_sp_ra  = [2,3,4,5,6,7,8,9,10]
-        max_depths_ra      = [1,2,3,4,5,6,7,8,9,10]
+        #n_estimators_ra    = [10,20,30,40,50,60,70,80,100]
+        #min_samples_lf_ra  = [1,2,3,4,5,6,7,8,9,10]
+        #min_samples_sp_ra  = [2,3,4,5,6,7,8,9,10]
+        #max_depths_ra      = [1,2,3,4,5,6,7,8,9,10]
  
-        #n_estimators_ra    = [20]
-        #max_depths_ra      = [6]
-        #min_samples_sp_ra  = [2]
-        #min_samples_lf_ra  = [8]
+        n_estimators_ra    = [20]
+        max_depths_ra      = [6]
+        min_samples_sp_ra  = [2]
+        min_samples_lf_ra  = [8]
         
         
         X_train, y_train = mod_process_data(df_preprocess, start_train, endin_train, start_tests, endin_tests, MAES, 'TRVAL')
@@ -123,7 +123,7 @@ for symbol in symbol_ra:
                         
                         save_tests_results(symbol, MAES, start_train, start_tests, endin_tests, n_estimatorss, max_depths, min_samples_sp, min_samples_lf, tests_accuracy, loops_tests_results)
                               
-                        #mod_backtesting(symbol,MAES,forrest_comb, df_preprocess, df_predictions, start_tests,endin_tests,loops_backs_results) 
+                        mod_backtesting(symbol,MAES,forrest_comb, df_preprocess, df_predictions, start_tests,endin_tests,loops_backs_results) 
                         print("Accuracy                :", tests_accuracy)
     
 os.system("afplay /System/Library/Sounds/Ping.aiff")
