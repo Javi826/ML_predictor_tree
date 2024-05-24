@@ -109,18 +109,21 @@ def tests_results(symbol, MAES, start_train, start_tests, endin_tests,n_estimato
         'tests_accuracy': tests_accuracy,
     }
 
-def backs_results(symbol,MAES,forrest_comb, initial_capital,last_capital,total_return_buy_hold,return_strategy,n_operations,rent_op_mean, sharpe_ratio_st,max_drawdown_st):
+def backs_results(symbol,MAES,forrest_comb,tests_accuracy, initial_capital,last_capital,total_return_buy_hold,return_strategy,n_operations,sum_signal,rent_op_mean, volatility_st,sharpe_ratio_st,max_drawdown_st):
     
     return {
         'symbol':symbol,
         'MAES':MAES,
         'forrest':forrest_comb,
+        'accuracy':round(tests_accuracy,2),
         'initial_capital': initial_capital,
         'last_capital': round(last_capital, 0),  
         'return_buy_hold': round(total_return_buy_hold, 1),
         'return_strategy': round(return_strategy, 1),
         'n_operations': n_operations,
+        'sum_signal': sum_signal,
         'rent_op_mean': round(rent_op_mean,1),
+        'volatility_st': round(volatility_st,2),
         'sharpe_ratio_st': round(sharpe_ratio_st,1),
         'max_drawdown_st': round(max_drawdown_st,1)
     }

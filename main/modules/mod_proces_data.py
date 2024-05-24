@@ -33,3 +33,16 @@ def mod_process_data(df_preprocess, start_train, endin_train, start_tests, endin
         y_tests = mod_pipeline(df_preprocess, start_train, endin_train,  start_tests, endin_tests, MAES, 'y_tests')
         
         return X_tests, y_tests
+    
+    
+    elif type_split == 'market':
+        
+        start_market = start_tests
+        endin_market = endin_tests
+        
+        X_market_techi = mod_pipeline(df_preprocess, start_train, endin_train,  start_market, endin_market, MAES,'X_market_techi')
+        
+        X_market = X_market_techi
+
+        
+        return X_market

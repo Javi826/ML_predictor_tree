@@ -10,9 +10,9 @@ import numpy as np
 import pandas as pd
 from main.paths.paths import path_base,folder_preprocess
 from main.functions.def_functions import filter_data_by_date_range, df_plots, diff_series
-from main.modules.mod_features import MAV, EMA, ROC, MOM, STK, STD
+from main.functions.def_featuring import MAV, EMA, ROC, MOM, STK, STD
 
-def mod_preprocess (df_build, MAES, e_features):
+def mod_preprocess (df_build, MAES, e_features,data_type):
     
     aveg1 = MAES
     aveg2 = aveg1 * 5
@@ -27,7 +27,7 @@ def mod_preprocess (df_build, MAES, e_features):
     
         df_preprocess['y_mavgs']   = np.where(df_preprocess['short_MAVG'] > df_preprocess['longs_MAVG'], 1, 0)
         df_preprocess['y_target']  = df_preprocess['y_mavgs'].shift(-1)
-    
+
         #FEATURING   
         #----------------------------------------------------------------------------------------------    
         df_preprocess['fet_MAV010']  = MAV(df_preprocess,10)
@@ -47,6 +47,7 @@ def mod_preprocess (df_build, MAES, e_features):
         df_preprocess['fet_%D200']   = STD(df_preprocess['close'], df_preprocess['low'], df_preprocess['high'], 200)
         df_preprocess['fet_%K200']   = STK(df_preprocess['close'], df_preprocess['low'], df_preprocess['high'], 200)
         #df_preprocess['fet_d_week']  = df_build['day_week']
+               
         
         #RETURNS
         #----------------------------------------------------------------------------------------------    
@@ -55,7 +56,7 @@ def mod_preprocess (df_build, MAES, e_features):
         
        df_preprocess['returns']    = df_preprocess['close'] - df_preprocess['close'].shift(1)
        df_preprocess['direction']  = np.where(df_preprocess['returns'] > 0, 1, 0)
-       df_preprocess['y_target']     = df_preprocess['direction'].shift(-1)
+       df_preprocess['y_target']   = df_preprocess['direction'].shift(-1)
        
        lags = 20
              
@@ -64,24 +65,22 @@ def mod_preprocess (df_build, MAES, e_features):
            col = f'rets_lag_{str(lag).zfill(2)}'
            df_preprocess[col] = df_preprocess['returns'].shift(lag)
            cols.append(col)
-                  
-
-       #df_preprocess['fet_%K010']   = STK(df_preprocess['close'], df_preprocess['low'], df_preprocess['high'], 10)           
-       #df_preprocess['fet_d_week']  = df_build['day_week']
-
-         
-    #DROPNA
-    #----------------------------------------------------------------------------------------------  
-     
-    df_preprocess.dropna(inplace=True)
     
     #df_preprocessing['date'] = pd.to_datetime(df_preprocessing['date'])
     df_plots(df_preprocess['date'],df_preprocess['close'],'date','close','lines')
     
     # SAVE Dataframe
-    file_suffix     = f"_{str(aveg1).zfill(2)}.xlsx"
-    excel_file_path = os.path.join(path_base, folder_preprocess, f"df_preprocess{file_suffix}")
-    df_preprocess.to_excel(excel_file_path, index=False)
+    #---------------------------------------------------------------------------------------------- 
+    if data_type == 'train':
+        
+        df_preprocess.dropna(inplace=True)        
+        excel_file_path = os.path.join(path_base, folder_preprocess, f"df_preprocess_{str(aveg1).zfill(2)}_train.xlsx")
+        df_preprocess.to_excel(excel_file_path, index=False)
+        
+    if data_type == 'market':
+        
+        excel_file_path = os.path.join(path_base, folder_preprocess, f"df_preprocess_{str(aveg1).zfill(2)}_market.xlsx")
+        df_preprocess.to_excel(excel_file_path, index=False)
     
     return df_preprocess
 

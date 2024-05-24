@@ -24,10 +24,10 @@ def save_tests_results(symbol, MAES, start_train, start_tests, endin_tests,n_est
     df_loops_tests_results.to_excel(excel_tests_path, index=False)
     
     
-def save_backs_results(symbol,MAES, forrest_comb, start_tests, initial_capital,last_capital,total_return_buy_hold,percentage_change,n_operations,rent_op_mean,sharpe_ratio_st,max_drawdown_st, loops_backs_results):
+def save_backs_results(symbol,MAES, forrest_comb,tests_accuracy, start_tests, initial_capital,last_capital,total_return_buy_hold,percentage_change,n_operations,sum_sginal,rent_op_mean, volatiliy_st, sharpe_ratio_st,max_drawdown_st, loops_backs_results):
     
     
-    dc_backs_results       = backs_results(symbol,MAES,forrest_comb, initial_capital,last_capital,total_return_buy_hold,percentage_change,n_operations,rent_op_mean, sharpe_ratio_st,max_drawdown_st)
+    dc_backs_results       = backs_results(symbol,MAES,forrest_comb, tests_accuracy, initial_capital,last_capital,total_return_buy_hold,percentage_change,n_operations,sum_sginal,rent_op_mean,volatiliy_st, sharpe_ratio_st,max_drawdown_st)
     loops_backs_results.append(dc_backs_results)      
     df_loops_backs_results = pd.DataFrame(loops_backs_results)
     
